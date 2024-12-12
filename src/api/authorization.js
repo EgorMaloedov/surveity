@@ -16,7 +16,7 @@ export const apiRegister = async (email, password) => {
     } catch (error) {
         if (error instanceof AxiosError) {
             if (error.response && error.response.status === 400) {
-                throw new AxiosError('User with the current email already exists');
+                throw new AxiosError('Пользователь уже существует');
             }
         }
         throw error;
@@ -37,7 +37,7 @@ export const apiLogin = async (email, password) => {
     } catch (error) {
         if (error instanceof AxiosError) {
             if (error.response && error.response.status === 401) {
-                throw new AxiosError('Incorrect data');
+                throw new AxiosError('Неправильные данные для входа');
             }
         }
         throw error;

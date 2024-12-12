@@ -28,6 +28,7 @@ export const useAuthStore = defineStore('auth', () => {
             authenticateUser(token || '');
         } catch (error) {
             authError.value = error;
+            throw error;
         }
     };
 
@@ -60,6 +61,7 @@ export const useAuthStore = defineStore('auth', () => {
             authenticateUser(token || '');
         } catch (error) {
             authError.value = error;
+            throw error;
         }
     };
 

@@ -66,7 +66,7 @@ const handleSubmit = async () => {
     await authStore.login(email.value, password.value);
     await router.push('/');
   } catch (error) {
-    serverError.value = 'Ошибка входа. Проверьте данные.';
+    serverError.value = error.message;
   } finally {
     loading.value = false;
   }
