@@ -19,8 +19,22 @@ import ContentLayout from "../layouts/ContentLayout.vue";
 
 <style scoped>
 
-#app{
-  padding: 0;
+@media (max-width: 768px) {
+  #app {
+    padding: 0;
+  }
+  .animate-spin-slow{
+    z-index: -11111;
+  }
+}
+
+@media (max-width: 480px) {
+  #app {
+    padding: 0;
+  }
+  .animate-spin-slow{
+    z-index: -11111;
+  }
 }
 
 .preview {
