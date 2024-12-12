@@ -18,10 +18,15 @@ import ContentLayout from "../layouts/ContentLayout.vue";
 </script>
 
 <style scoped>
+
+#app{
+  padding: 0;
+}
+
 .preview {
   height: 100%;
   user-select: none;
-  width: 70%;
+  width: 100%;
   margin: 0 auto;
   position: relative;
   display: flex;
@@ -35,6 +40,7 @@ import ContentLayout from "../layouts/ContentLayout.vue";
   padding-bottom: 13rem;
   font-size: 3.3rem;
   height: 100%;
+  width: 70%;
   display: flex;
   flex-direction: column;
   align-items: center;

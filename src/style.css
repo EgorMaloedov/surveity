@@ -94,9 +94,6 @@ span.bold{
 }
 
 @media (max-width: 768px) {
-  #app {
-    padding: 10px;
-  }
   .content {
     max-width: 100%;
   }
@@ -106,9 +103,6 @@ span.bold{
 }
 
 @media (max-width: 480px) {
-  #app {
-    padding: 5px;
-  }
   .content {
     max-width: 100%;
   }
