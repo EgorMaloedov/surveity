@@ -1,21 +1,70 @@
-# Vue 3 + Vite
+# Surveity
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Surveity is an application for creating and conducting surveys, developed using Vue 3 and Vite. This template should help you get started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs; check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
 
-While this project uses Vue.js, Vite supports many popular JS frameworks. [See all the supported frameworks](https://vitejs.dev/guide/#scaffolding-your-first-vite-project).
+Although this project uses Vue.js, Vite supports many popular JS frameworks. [See all the supported frameworks](https://vitejs.dev/guide/#scaffolding-your-first-vite-project).
 
-## Deploy Your Own
+_Live Example: [https://surveity.vercel.app](https://surveity.vercel.app)_
 
-Deploy your own Vite project with Vercel.
+## Installation and Running
 
-[![Deploy with Vercel](https://vercel.com/button)]([https://vercel.com/new/clone?repository-url=https://github.com/vercel/vercel/tree/main/examples/vite&template=vite](https://vercel.com/new/clone?demo-description=Vite%2FVue.js%20site%20that%20can%20be%20deployed%20to%20Vercel&demo-image=%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F2T4BUF3mEBKPJF3jcjU6nS%2F0d4a02e7c48091d13814a4ab513e8734%2FScreen_Shot_2022-04-13_at_10.05.56_PM.png&demo-title=Vite%20-%20Vue&demo-url=https%3A%2F%2Fvite-vue-template.vercel.app%2F&from=templates&project-name=Vite%20-%20Vue&repository-name=vite-vue&repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fvercel%2Ftree%2Fmain%2Fexamples%2Fvite&skippable-integrations=1))
+### Cloning the Repository
 
-_Live Example: https://vite-vue-template.vercel.app_
+git clone https://github.com/egormaloedov/surveity.git
 
-### Deploying From Your Terminal
+### Installing Dependencies
 
-You can deploy your new Vite project with a single command from your terminal using [Vercel CLI](https://vercel.com/download):
+<code>
+    npm install
+</code>
 
-```shell
-$ vercel
-```
+
+### Running Development Server
+
+<code>
+    npm run dev
+</code>
+
+
+### Building the Project
+
+<code>
+    npm run build
+</code>
+
+
+### Running Tests
+
+<code>
+    npm run test
+</code>
+
+## Key Features
+
+- **Create Surveys:** Easily create surveys with various question types.
+- **Conduct Surveys:** Share survey links and collect responses.
+- **Analyze Results:** View and analyze survey results in a user-friendly interface.
+- **Intuitive Interface:** Simple and easy-to-use interface for users.
+
+## Technologies
+
+- **Vue 3:** A progressive framework for building user interfaces.
+- **Vite:** A fast build tool for modern web projects.
+- **Vercel:** A platform for deploying web applications.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Contact
+
+If you have any questions or suggestions, please feel free to contact us:
+
+- **Email:** mr.maloedov@gmail.com
+- **GitHub:** [EgorMaloedov](https://github.com/egormaloedov)
+
+## Acknowledgments
+
+Thank you to everyone who has contributed to the development of this project!
+
+---
