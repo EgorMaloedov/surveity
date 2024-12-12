@@ -1,3 +1,3 @@
 <template>
-  Surveity
+  <RouterView/>
 </template>
