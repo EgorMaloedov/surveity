@@ -86,15 +86,14 @@ export const useSurveyStore = defineStore('surveys', () => {
      */
     const fetchUserSurveys = async (token) => {
         isLoading.value = true;
-        let surveysList;
+        let response;
         try {
-            surveysList = await apiFetchUserSurveys(token);
+            response = await apiFetchUserSurveys(token);
         } catch (error) {
-            surveysList = [];
             console.error(error);
         }
         isLoading.value = false;
-        setSurveys(surveysList || []);
+        setSurveys(response.surveys || []);
     };
 
     return {
