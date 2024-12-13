@@ -28,7 +28,7 @@
         </div>
       </ListItem>
 
-      <draggable v-model="survey.questions" class="draggable-list">
+      <draggable v-model="survey.questions" class="draggable-list" @end="updateQuestionsOrder">
         <template #item="{ element, index }">
           <div class="draggable-item">
             <Question
@@ -56,14 +56,13 @@
 </template>
 
 <script setup>
-
-import { ref, watch } from "vue";
+import {ref, watch} from "vue";
 import ListItem from "../Surveys/ModalSurveyList/ListItem.vue";
-import { v6 } from "uuid";
+import {v6} from "uuid";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import Question from "./ModalSurveyList/Question.vue";
-import { useSurveyStore } from "../../../stores/surveys/surveysStore";
+import {useSurveyStore} from "../../../stores/surveys/surveysStore";
 import {useAuthStore} from "../../../stores/auth/authStore.js";
 import draggable from 'vuedraggable'
 
@@ -86,29 +85,34 @@ const emptyQuestion = {
   type: "empty",
   text: "",
   answers: [],
+  order: 0, // Добавлено поле order
 };
 
 const survey = ref(JSON.parse(JSON.stringify(surveyStore.currentSurvey)));
 const isDragging = ref(false);
 
 const calculateMinEndDate = (startDate) => {
-  return new Date( new Date(startDate).getTime() + 30 * 60 * 1000);
+  return new Date(new Date(startDate).getTime() + 30 * 60 * 1000);
 };
 
-const updateQuestionsOrder = (newOrder) => {
-  survey.value.questions = [...newOrder];
+const updateQuestionsOrder = () => {
+  survey.value.questions.forEach((question, index) => {
+    question.order = index + 1;
+  });
 };
 
 const handleAddQuestion = () => {
-  survey.value.questions.push({ ...emptyQuestion, id: v6() });
+  survey.value.questions.push({...emptyQuestion, id: v6()});
+  updateQuestionsOrder(); // Обновляем порядок после добавления нового вопроса
 };
 
-const updateQuestion = (index, { question }) => {
-  survey.value.questions[index] = { ...question };
+const updateQuestion = (index, {question}) => {
+  survey.value.questions[index] = {...question};
 };
 
 const deleteQuestion = (index) => {
   survey.value.questions.splice(index, 1);
+  updateQuestionsOrder(); // Обновляем порядок после удаления вопроса
 };
 
 const handleUpdateSurvey = async () => {
@@ -118,7 +122,7 @@ const handleUpdateSurvey = async () => {
     survey.value.endDate = new Date(survey.value.endDate).toISOString();
     const authStore = useAuthStore()
     await surveyStore.updateSurvey(survey.value, authStore.accessToken);
-    emit("update:modalValue", { modalValue: false });
+    emit("update:modalValue", {modalValue: false});
   } catch (error) {
     console.error("Ошибка при создании опроса:", error);
     alert("Не удалось сохранить опрос. Попробуйте снова.");
@@ -146,8 +150,8 @@ const handleCreateSurvey = () => {
   try {
     const authStore = useAuthStore();
     const token = authStore.accessToken;
-    surveyStore.createSurvey({ ...survey.value }, token);
-    emit("update:modalValue", { modalValue: false });
+    surveyStore.createSurvey({...survey.value}, token);
+    emit("update:modalValue", {modalValue: false});
   } catch (error) {
     console.error("Ошибка при создании опроса:", error);
     alert("Не удалось сохранить опрос. Попробуйте снова.");
@@ -173,7 +177,6 @@ const onEnd = () => {
 };
 </script>
 
-
 <style scoped>
 .createSurveyWrapper {
   width: 35vw;
@@ -188,22 +191,24 @@ const onEnd = () => {
   background-color: #21212B;
 }
 
-.createSurveyWrapper::-webkit-scrollbar-track{
-  background: none;
-}
-.createSurveyWrapper::-webkit-scrollbar-thumb{
-  background: none;
-  border-radius: 0;
-}
-.createSurveyWrapper::-webkit-scrollbar{
-  width: 0;
-}
-.createSurveyWrapper::-webkit-scrollbar-track{
+.createSurveyWrapper::-webkit-scrollbar-track {
   background: none;
 }
 
-.createSurveyWrapper
-{
+.createSurveyWrapper::-webkit-scrollbar-thumb {
+  background: none;
+  border-radius: 0;
+}
+
+.createSurveyWrapper::-webkit-scrollbar {
+  width: 0;
+}
+
+.createSurveyWrapper::-webkit-scrollbar-track {
+  background: none;
+}
+
+.createSurveyWrapper {
   scrollbar-width: none;
   scrollbar-width: rgba(0, 0, 0, 0);
 }
@@ -251,7 +256,7 @@ const onEnd = () => {
   width: 100%;
 }
 
-#textInput{
+#textInput {
   width: 100%;
   padding: 0.2rem 0;
   background: none;
@@ -260,7 +265,7 @@ const onEnd = () => {
   font-size: 0.8rem;
 }
 
-.createSurveySteps{
+.createSurveySteps {
   margin-top: 2rem;
   width: 100%;
   height: 100%;
@@ -269,7 +274,7 @@ const onEnd = () => {
   gap: 3rem;
 }
 
-.createSurveyBtn{
+.createSurveyBtn {
   margin-top: 3rem;
   cursor: pointer;
   width: 30%;
@@ -285,7 +290,7 @@ const onEnd = () => {
   color: #fff;
 }
 
-.addQuestionBtn{
+.addQuestionBtn {
   cursor: pointer;
   background: none;
   border: none;
@@ -356,6 +361,4 @@ const onEnd = () => {
 .draggable-item .delete-btn:hover {
   color: #ff5b5b;
 }
-
 </style>
-

@@ -56,7 +56,7 @@ export const apiCreateSurvey = async (survey, token) => {
  */
 export const apiDeleteSurvey = async (surveyId, token) => {
     try {
-        await apiClient.delete(`/surveys/${surveyId}`, {
+        await apiClient.delete(`/api/v1/surveys/${surveyId}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

@@ -3,7 +3,7 @@
  * @property {string} text - Текст ответа.
  * @property {'radio'|'checkbox'|'custom'} type - Тип ответа.
  * @property {string} [description] - Описание ответа.
- * @property {number} [order] - Порядок ответа.
+ * @property {order} [order] - Порядок ответа.
  * @property {boolean} [isCorrect] - Флаг правильного ответа.
  */
 
@@ -13,11 +13,11 @@
  * @property {string} type - Тип вопроса.
  * @property {string} text - Текст вопроса.
  * @property {string} [description] - Описание вопроса.
- * @property {number} [order] - Порядок вопроса.
+ * @property {order} [order] - Порядок вопроса.
  * @property {boolean} [required] - Флаг обязательного вопроса.
  * @property {Object} [options] - Опции вопроса.
- * @property {number} [options.minSelect] - Минимальное количество ответов.
- * @property {number} [options.maxSelect] - Максимальное количество ответов.
+ * @property {order} [options.minSelect] - Минимальное количество ответов.
+ * @property {order} [options.maxSelect] - Максимальное количество ответов.
  * @property {Answer[]} answers - Массив возможных ответов.
  */
 
@@ -32,7 +32,7 @@
  * @property {Date} startDate - Дата начала опроса.
  * @property {Date} endDate - Дата окончания опроса.
  * @property {'completed'|'pending'|'waiting'} status - Статус опроса.
- * @property {number} [maxResponses] - Максимальное количество ответов.
+ * @property {order} [maxResponses] - Максимальное количество ответов.
  * @property {boolean} [isAnonymous] - Флаг анонимного опроса.
  * @property {string[]} [tags] - Теги для опроса.
  * @property {Question[]} questions - Массив вопросов.
