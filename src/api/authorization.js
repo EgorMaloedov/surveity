@@ -57,7 +57,6 @@ export const apiAuthenticate = async (token) => {
                 Authorization: `Bearer ${token}`,
             },
         });
-        console.log(response);
         return true;
     } catch (error) {
         if (error instanceof AxiosError) {

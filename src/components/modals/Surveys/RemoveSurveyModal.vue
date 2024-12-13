@@ -22,7 +22,6 @@ const survey = computed(() => surveyStore.currentSurvey);
 const handleRemoveSurvey = async () => {
   if (survey.value) {
     try {
-      console.log(survey.value);
       await surveyStore.removeSurvey(survey.value.id, authStore.accessToken);
     } catch (error) {
       console.error("Failed to remove survey:", error);
