@@ -1,8 +1,9 @@
-import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import {defineStore} from 'pinia';
+import {ref} from 'vue';
 import {
     apiCreateSurvey,
     apiDeleteSurvey,
+    apiFetchUserSurvey,
     apiFetchUserSurveys,
     apiUpdateSurvey,
 } from '../../api/surveys/surveys.js';
@@ -24,8 +25,14 @@ export const useSurveyStore = defineStore('surveys', () => {
     /**
      * Установить текущий опрос.
      * @param {Survey|null} survey - Текущий опрос.
+     * @param token
      */
-    const setCurrentSurvey = (survey) => {
+    const setCurrentSurvey = async (survey, token = null) => {
+        if (survey && token){
+            const response = await apiFetchUserSurvey(token, survey.id);
+            currentSurvey.value = response.survey;
+            return
+        }
         currentSurvey.value = survey;
     };
 
@@ -36,8 +43,14 @@ export const useSurveyStore = defineStore('surveys', () => {
      * @returns {Promise<void>}
      */
     const createSurvey = async (survey, token) => {
-        surveys.value.push(survey);
-        await apiCreateSurvey(survey, token);
+        try {
+            const response = await apiCreateSurvey(survey, token);
+            const createdSurveyId = response.survey_id
+            surveys.value.push({...survey, ID: createdSurveyId});
+        }
+        catch (error) {
+
+        }
     };
 
     /**

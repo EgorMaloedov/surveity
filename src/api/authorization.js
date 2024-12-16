@@ -12,7 +12,7 @@ import './authTypes.js'
 export const apiRegister = async (email, password) => {
     try {
         const response = await apiClient.post('/api/v1/auth/register', { email, password });
-        return response.data.accessToken;
+        return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
             if (error.response && error.response.status === 400) {
@@ -33,7 +33,7 @@ export const apiRegister = async (email, password) => {
 export const apiLogin = async (email, password) => {
     try {
         const response = await apiClient.post('/api/v1/auth/login', { email, password });
-        return response.data.accessToken;
+        return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
             if (error.response && error.response.status === 401) {
@@ -52,7 +52,7 @@ export const apiLogin = async (email, password) => {
  */
 export const apiAuthenticate = async (token) => {
     try {
-        const response = await apiClient.post('/api/v1/auth/authentication', {}, {
+        const response = await apiClient.post('/api/v1/auth/authenticate', {}, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

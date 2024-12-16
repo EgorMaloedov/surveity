@@ -16,19 +16,19 @@
       <ListItem title="Выберите даты:">
         <div class="date-picker-row">
           <VueDatePicker
-              v-model="survey.startDate"
+              v-model="survey.start_date"
               :min-date="new Date()"
               label="Дата начала"
           />
           <VueDatePicker
-              v-model="survey.endDate"
-              :min-date="calculateMinEndDate(survey.startDate)"
+              v-model="survey.end_date"
+              :min-date="calculateMinEndDate(survey.start_date)"
               label="Дата окончания"
           />
         </div>
       </ListItem>
 
-      <draggable v-model="survey.questions" item-key="id" class="draggable-list" @end="updateQuestionsOrder">
+      <draggable v-model="survey.questions" :itemKey="survey.order" class="draggable-list" @end="updateQuestionsOrder">
         <template #item="{ element, index }">
           <div class="draggable-item">
             <Question
@@ -70,20 +70,21 @@ const surveyStore = useSurveyStore();
 const emit = defineEmits(["update:modalValue"]);
 
 const emptySurvey = {
-  id: v6(),
-  owner: "testOwner",
   title: "",
-  startDate: new Date(),
-  endDate: new Date(new Date().getTime() + 30 * 60 * 1000),
-  status: "waiting",
+  description: "",
+  start_date: new Date(),
+  end_date: new Date(new Date().getTime() + 30 * 60 * 1000),
+  isAnonymous: false,
+  status: "scheduled",
   questions: [],
 };
 
 const emptyQuestion = {
-  id: v6(),
   name: "",
   type: "empty",
   text: "",
+  order: 0,
+  required: true,
   answers: [],
 };
 
@@ -135,6 +136,12 @@ const handleCreateSurvey = () => {
   try {
     const authStore = useAuthStore();
     const token = authStore.accessToken;
+    if (new Date(survey.value.start_date).getTime() > new Date().getTime()) {
+      survey.value.status = "scheduled";
+    }
+    else{
+      survey.value.status = "active";
+    }
     surveyStore.createSurvey({...survey.value}, token);
     emit("update:modalValue", {modalValue: false});
   } catch (error) {

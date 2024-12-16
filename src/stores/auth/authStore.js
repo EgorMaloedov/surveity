@@ -24,8 +24,9 @@ export const useAuthStore = defineStore('auth', () => {
      */
     const login = async (email, password) => {
         try {
-            const token = await apiLogin(email, password);
-            authenticateUser(token || '');
+            const response = await apiLogin(email, password);
+            console.log(response)
+            authenticateUser(response.token || '');
         } catch (error) {
             authError.value = error;
             throw error;
@@ -57,8 +58,8 @@ export const useAuthStore = defineStore('auth', () => {
      */
     const register = async (email, password) => {
         try {
-            const token = await apiRegister(email, password);
-            authenticateUser(token || '');
+            const response = await apiRegister(email, password);
+            authenticateUser(response.token || '');
         } catch (error) {
             authError.value = error;
             throw error;

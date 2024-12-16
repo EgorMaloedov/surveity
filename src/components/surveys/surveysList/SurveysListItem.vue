@@ -9,6 +9,7 @@
       <div id="surveyTitle" :style="{ '--statusColor': statusColor }">
         <img src="../../../assets/media/surveyListItem/surveyTitle.svg" alt="Survey Icon" />
         <span>{{ survey.title }}</span>
+        <SurveyStatus :status="survey.status" />
       </div>
       <img
           class="menuArrow"
@@ -53,6 +54,8 @@ import { computed, ref, markRaw } from 'vue';
 import {useSurveyStore} from "../../../stores/surveys/surveysStore.js";
 import RemoveSurveyModal from "../../modals/Surveys/RemoveSurveyModal.vue";
 import ChangeSurveyModal from "../../modals/Surveys/ChangeSurveyModal.vue";
+import {useAuthStore} from "../../../stores/auth/authStore.js";
+import SurveyStatus from "./SurveyStatus.vue";
 
 // Define props
 const props = defineProps({
@@ -75,8 +78,9 @@ const toggleMenu = () => {
 };
 
 // Open the change survey modal
-const changeSurvey = () => {
-  surveyStore.setCurrentSurvey(props.survey);
+const changeSurvey = async () => {
+  const authStore = useAuthStore()
+  await surveyStore.setCurrentSurvey(props.survey, authStore.accessToken);
   emit('update:modalValue', {
     modalValue: true,
     component: markRaw(ChangeSurveyModal),

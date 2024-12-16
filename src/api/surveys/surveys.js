@@ -25,10 +25,33 @@ export const apiFetchUserSurveys = async (token) => {
 };
 
 /**
+ * Function to fetch survey by user and id.
+ * @param {string} token - Authorization token.
+ * @param {string} surveyId
+ * @returns {Promise<Survey>} - Promise that resolves to an array of surveys.
+ * @throws {AxiosError} - Error if fetching surveys fails.
+ */
+export const apiFetchUserSurvey = async (token, surveyId) => {
+    try {
+        const response = await apiClient.get(`/api/v1/surveys/${surveyId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            throw new AxiosError('Failed to fetch user surveys');
+        }
+        throw error;
+    }
+};
+
+/**
  * Function to create a new survey.
  * @param {Survey} survey - Survey object to be created.
  * @param {string} token - Authorization token.
- * @returns {Promise<Survey>} - Promise that resolves to the created survey.
+ * @returns {Promise<Object>} - Promise that resolves to the created survey.
  * @throws {AxiosError} - Error if creating the survey fails.
  */
 export const apiCreateSurvey = async (survey, token) => {
