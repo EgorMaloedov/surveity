@@ -16,13 +16,13 @@
       <ListItem title="Выберите даты:">
         <div class="date-picker-row">
           <VueDatePicker
-              v-model="survey.startDate"
+              v-model="survey.start_date"
               :min-date="new Date()"
               label="Дата начала"
           />
           <VueDatePicker
-              v-model="survey.endDate"
-              :min-date="calculateMinEndDate(survey.startDate)"
+              v-model="survey.end_date"
+              :min-date="calculateMinEndDate(survey.start_date)"
               label="Дата окончания"
           />
         </div>
@@ -70,7 +70,6 @@ const surveyStore = useSurveyStore();
 const emit = defineEmits(["update:modalValue"]);
 
 const emptySurvey = {
-  id: v6(),
   owner: "testOwner",
   title: "",
   startDate: new Date(),
@@ -80,7 +79,6 @@ const emptySurvey = {
 };
 
 const emptyQuestion = {
-  id: v6(),
   name: "",
   type: "empty",
   text: "",
@@ -102,7 +100,7 @@ const updateQuestionsOrder = () => {
 };
 
 const handleAddQuestion = () => {
-  survey.value.questions.push({...emptyQuestion, id: v6()});
+  survey.value.questions.push({...emptyQuestion});
   updateQuestionsOrder(); // Обновляем порядок после добавления нового вопроса
 };
 
@@ -118,8 +116,8 @@ const deleteQuestion = (index) => {
 const handleUpdateSurvey = async () => {
   if (!validateSurvey()) return;
   try {
-    survey.value.startDate = new Date(survey.value.startDate).toISOString();
-    survey.value.endDate = new Date(survey.value.endDate).toISOString();
+    survey.value.start_date = new Date(survey.value.start_date).toISOString();
+    survey.value.end_date = new Date(survey.value.end_date).toISOString();
     const authStore = useAuthStore()
     await surveyStore.updateSurvey(survey.value, authStore.accessToken);
     emit("update:modalValue", {modalValue: false});

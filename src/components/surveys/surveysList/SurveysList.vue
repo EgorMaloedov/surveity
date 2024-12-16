@@ -2,7 +2,7 @@
   <div class="surveys-list">
     <SurveysListItem
         @update:modalValue="updateModalValue"
-        v-for="survey in surveys"
+        v-for="survey in surveysArray"
         :key="survey.id"
         :survey="survey"
     />
@@ -15,7 +15,7 @@ import {useSurveyStore} from "../../../stores/surveys/surveysStore.js";
 import SurveysListItem from "./SurveysListItem.vue";
 
 const surveysStore = useSurveyStore();
-const surveys = computed(() => surveysStore.surveys);
+const surveysArray = computed(() => surveysStore.surveys.values());
 
 const emits = defineEmits(["update:modalValue"]);
 

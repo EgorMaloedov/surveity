@@ -16,7 +16,7 @@ const statusText = computed(() => {
   switch (props.status) {
     case 'completed':
       return 'Завершён';
-    case 'pending':
+    case 'active':
       return 'В ожидании';
     case 'waiting':
       return 'Ожидает';
@@ -29,7 +29,7 @@ const statusColor = computed(() => {
   switch (props.status) {
     case 'completed':
       return '#4caf50'; // Зеленый
-    case 'pending':
+    case 'active':
       return '#ff9800'; // Оранжевый
     case 'waiting':
       return '#f44336'; // Красный
@@ -42,7 +42,7 @@ const statusGradient = computed(() => {
   switch (props.status) {
     case 'completed':
       return 'linear-gradient(135deg, #4caf50, #66bb6a)';
-    case 'pending':
+    case 'active':
       return 'linear-gradient(135deg, #ff9800, #ffc107)';
     case 'waiting':
       return 'linear-gradient(135deg, #f44336, #e57373)';

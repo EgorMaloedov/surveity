@@ -1,5 +1,5 @@
-import {defineStore} from 'pinia';
-import {ref} from 'vue';
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
 import {
     apiCreateSurvey,
     apiDeleteSurvey,
@@ -10,7 +10,7 @@ import {
 import './types.js';
 
 export const useSurveyStore = defineStore('surveys', () => {
-    const surveys = ref([]);
+    const surveys = ref(new Map());
     const currentSurvey = ref(null);
     const isLoading = ref(false);
 
@@ -19,7 +19,10 @@ export const useSurveyStore = defineStore('surveys', () => {
      * @param {Survey[]} newSurveys - Новый список опросов.
      */
     const setSurveys = (newSurveys) => {
-        surveys.value = newSurveys;
+        surveys.value = new Map();
+        newSurveys.forEach((survey) => {
+            surveys.value.set(survey.id, survey);
+        })
     };
 
     /**
@@ -28,10 +31,12 @@ export const useSurveyStore = defineStore('surveys', () => {
      * @param token
      */
     const setCurrentSurvey = async (survey, token = null) => {
-        if (survey && token){
+        if (survey && token) {
             const response = await apiFetchUserSurvey(token, survey.id);
+            response.survey.strat_date = new Date(response.survey.strat_date);
+            response.survey.end_date = new Date(response.survey.end_date);
             currentSurvey.value = response.survey;
-            return
+            return;
         }
         currentSurvey.value = survey;
     };
@@ -45,11 +50,10 @@ export const useSurveyStore = defineStore('surveys', () => {
     const createSurvey = async (survey, token) => {
         try {
             const response = await apiCreateSurvey(survey, token);
-            const createdSurveyId = response.survey_id
-            surveys.value.push({...survey, ID: createdSurveyId});
-        }
-        catch (error) {
-
+            const createdSurveyId = response.survey_id;
+            surveys.value.set(createdSurveyId, { ...survey, id: createdSurveyId });
+        } catch (error) {
+            console.error(error);
         }
     };
 
@@ -60,12 +64,9 @@ export const useSurveyStore = defineStore('surveys', () => {
      * @returns {Promise<void>}
      */
     const updateSurvey = async (updatedSurvey, token) => {
-        surveys.value = surveys.value.map((survey) => {
-            if (updatedSurvey && survey.id === updatedSurvey.id) {
-                survey = updatedSurvey;
-            }
-            return survey;
-        });
+        if (surveys.value.has(updatedSurvey.id)) {
+            surveys.value.set(updatedSurvey.id, updatedSurvey);
+        }
         try {
             isLoading.value = true;
             await apiUpdateSurvey(updatedSurvey, token);
@@ -82,7 +83,7 @@ export const useSurveyStore = defineStore('surveys', () => {
      * @returns {Promise<void>}
      */
     const removeSurvey = async (id, token) => {
-        surveys.value = surveys.value.filter((survey) => survey.id !== id);
+        surveys.value.delete(id);
         try {
             isLoading.value = true;
             await apiDeleteSurvey(id, token);

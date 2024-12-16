@@ -28,7 +28,7 @@
         </div>
       </ListItem>
 
-      <draggable v-model="survey.questions" :itemKey="survey.order" class="draggable-list" @end="updateQuestionsOrder">
+      <draggable v-model="survey.questions" :itemKey="survey.id" class="draggable-list" @end="updateQuestionsOrder">
         <template #item="{ element, index }">
           <div class="draggable-item">
             <Question
@@ -70,6 +70,7 @@ const surveyStore = useSurveyStore();
 const emit = defineEmits(["update:modalValue"]);
 
 const emptySurvey = {
+  id: v6(),
   title: "",
   description: "",
   start_date: new Date(),

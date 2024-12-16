@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="left">
-      <img id="logo-left" src="../assets/media/logo.svg" alt="Surveity logo">
+      <img id="logo-left" src="../assets/media/surveyListItem/logo.svg" alt="Surveity logo">
       <nav class="headerNavigation">
         <RouterLink v-for="link in routerLinks" :key="link.path" :to="link.path">
           {{ link.name }}

@@ -28,6 +28,10 @@
       <div v-if="openStatus" class="item-menu">
         <div class="menu-content">
           <div class="left">
+            <span @click="linkSurvey">
+              <img src="../../../assets/media/surveyListItem/linnk.svg" alt="Survey Icon" />
+              <span>Поделиться опросом</span>
+            </span>
             <span @click="changeSurvey">
               <img src="../../../assets/media/surveyListItem/changeSurveyIcon.svg" alt="Survey Icon" />
               <span>Редактировать опрос</span>
@@ -56,6 +60,7 @@ import RemoveSurveyModal from "../../modals/Surveys/RemoveSurveyModal.vue";
 import ChangeSurveyModal from "../../modals/Surveys/ChangeSurveyModal.vue";
 import {useAuthStore} from "../../../stores/auth/authStore.js";
 import SurveyStatus from "./SurveyStatus.vue";
+import LinkSurveyModal from "../../modals/Surveys/LinkSurveyModal.vue";
 
 // Define props
 const props = defineProps({
@@ -93,6 +98,15 @@ const removeSurvey = () => {
   emit('update:modalValue', {
     modalValue: true,
     component: markRaw(RemoveSurveyModal),
+  });
+};
+
+// Open the remove survey modal
+const linkSurvey = () => {
+  surveyStore.setCurrentSurvey(props.survey);
+  emit('update:modalValue', {
+    modalValue: true,
+    component: markRaw(LinkSurveyModal),
   });
 };
 
